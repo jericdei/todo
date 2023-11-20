@@ -1,5 +1,6 @@
 import express from 'express'
 import Database from 'bun:sqlite'
+import cors from 'cors'
 
 const db = new Database('./database.db', {
 	create: true,
@@ -10,6 +11,7 @@ db.exec('CREATE TABLE IF NOT EXISTS todos (id INTEGER PRIMARY KEY, text TEXT, do
 const app = express()
 
 app.use(express.json())
+app.use(cors())
 
 app.get('/todos', (req, res) => {
 	const todos = db.query('SELECT * FROM todos').all()
